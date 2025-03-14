@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        const num = parseInt(prompt("숫자를 입력하세요."));
+        
+        const numArray = [];
+
+        for (let i = 1; i <= num; i++) {
+
+            if(i % 7 == 0){
+                numArray.push(i); 
+            }
+        }
+
+        document.write("7의 배수 : " +numArray);
+    </script>
+</body>
+</html>
