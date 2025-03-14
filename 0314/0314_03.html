@@ -9,15 +9,33 @@
     <script>
         const drink = prompt("어떤 음료를 주문하시겠습니까? (1:커피, 2:에이드, 3:스무디)");
 
-        const prices = { "1": 100, "2": 200, "3": 300 };
-        const drinks = { "1": "커피", "2": "에이드", "3": "스무디" };
+        let drinkname;
+        let price;
 
-        if (drinks[drink]) {
-            document.write (`<h1>${drinks[drink]} 나왔습니다. 가격은 ${prices[drink]}원입니다.</h1>`);
-        } else {
-            document.write (`<h1>제대로 골라주세요.</h1>`);
-        }
+        switch (drink) {
+                case "1":
+                    drinkname = "커피"
+                    price = 100;
+                    
+                    document.write(`<h1> ${drinkname} 나왔습니다. 가격은 ${price}원입니다.</h1>`);
+                      break;
 
+                case "2":
+                    drinkname = "에이드"
+                    price = 200;
+
+                    document.write(`<h1> ${drinkname} 나왔습니다. 가격은 ${price}원입니다.</h1>`);
+                     break;
+
+                case "3":
+                    drinkname = "스무디"
+                    price = 300;
+
+                    document.write(`<h1> ${drinkname} 나왔습니다. 가격은 ${price}원입니다.</h1>`);
+                     break;
+                default:
+                    document.write("<h1>제대로 골라주세요.</h1>");
+}
     </script>
 
 
