@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li.done{
+            color: gray;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <!-- 사용자 입력값을 리스트에 추가 -->
+     <input type="text" id="userInput" value="하하">
+     <button onclick="addToList()">추가</button>
+
+     <ul id="itemList">
+
+    <!-- <li class="done">기본</li> -->
+     </ul>
+
+     <script>
+        function addToList(){
+            let input = document.getElementById("userInput").value;
+            alert("출력 : " + input);
+            if(input.trim() !== ""){    //.trim 문자열 앞 뒤의 공백 제거
+                let li = document.createElement("li"); //<li></li>가 만들ㅇ어져서 잊력됨
+                li.innerText = input; //<li> input 값 </li>
+
+                //두 번 클릭 시 삭제
+                li.setAttribute("ondblclick", "removeItem(this)");
+
+                //한 번 클릭 시 취소선
+                li.addEventListener("click",function(){
+                    li.classList.toggle("done");
+                })
+                document.getElementById("itemList").appendChild(li) //자식 요소 추가
+                document.getElementById("userInput").value = "";
+            }
+        }
+
+        function removeItem(element){
+          element.remove();
+        }
+     </script>
+</body>
+</html>
