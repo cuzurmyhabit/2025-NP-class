@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="alert('버튼이 클릭되었습니다!')">클릭하세요</button>
+
+    <ul>
+        <li onclick="showAlert('하이')">안녕하세요.</li>
+        <li onclick="showAlert('하이')">안녕하세요.</li>
+        <li onclick="showAlert('하이')">안녕하세요.</li>
+    </ul>
+
+    <ul>
+        <li onclick="showAlert2(this)">오리</li>
+        <li onclick="showAlert2(this)">너구리</li>
+        <li onclick="showAlert2(this)">오리너구리</li>
+    </ul>
+
+    <script>
+        function showAlert(msg){
+            alert(`${msg}버튼을 클릭했습니다아`);
+        }
+
+        function showAlert2(element){
+            const content = element.textContent; //텍스트 가져오기
+            alert(`${content}을 클릭했습니다아`);
+        }
+    </script>
+
+    <ul id="result">
+        <li onclick="changeBg('green')">Green</li>
+        <li onclick="changeBg('orange')">Orange</li>
+        <li onclick="changeBg('purple')">Purple</li>
+    </ul>
+
+    <ul id="result2">
+        <li onclick="changeBg2(this)">Green</li>
+        <li onclick="changeBg2(this)">Orange</li>
+        <li onclick="changeBg2(this)">Purple</li>
+    </ul>
+
+    <script>
+        function changeBg(color){
+            const content = document.querySelector("#result");
+            content.style.backgroundColor = color;
+        }
+
+        function changeBg2(element){
+            const content = element.textContent;
+            const content2 = document.querySelector("#result2");
+            content2.style.backgroundColor = content;
+        }
+    </script>
+
+<!-- 버튼 클릭 시 숫자 중가/감소  -->
+    <p id="counter"> 0 </p>
+
+    <button onclick="plus()"> + </button>
+    <button onclick="minus()"> - </button>
+    <script>
+        let count = 0;
+        function plus(){
+            count++;
+            document.getElementById("counter").innerText = count;
+        }
+
+        function minus(){
+        count--;
+        document.getElementById("counter").innerText = count;
+        }
+    </script>
+
+    <!-- 버튼 클릭 시 특정 요소 숨기기 -->
+    <button onclick="hideElement()">숨기기</button>
+    <button onclick="lookElement()">나타내기</button>
+    <div id="box" style="width: 100px; height: 100px; background-color: aqua;"></div>
+
+    <script>
+        function hideElement(){
+            document.getElementById("box").style.display = "none";
+        }
+
+        function lookElement(){
+            document.getElementById("box").style.display = "";
+        }
+    </script>
+
+    <!-- 마우스를 올리면 텍스트 변경 -->
+
+    <p id="hoverText" onmouseover="changeText(event)" onmouseout="changeText(event)"> 여기에 마우스를 올려보세요 </p>
+
+    <script>
+        function changeText(event) {
+            if (event.type === "mouseover") {
+                document.getElementById("hoverText").innerText = "마우스를 올렸어용";
+            } else if (event.type === "mouseout") {
+                document.getElementById("hoverText").innerText = "여기에 마우스를 올려보세요";
+            }
+        }
+        
+    </script>
+
+
+    버튼 클릭 시 배경색을 랜덤하게 변경
+    <button onclick="changeRandomColor()"> 배경색 변경 </button>
+
+    <script>
+        function changeRandomColor(){
+            let colors = ["red", "blue", "green", "yellow", "purple", "pink"];
+            let randomcolor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.backgroundColor = randomcolor;
+        }
+    </script>
+</body>
+</html>
