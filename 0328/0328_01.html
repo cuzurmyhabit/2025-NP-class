@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 입력 값 변경 시 알림 표시  -->
+     <input type="text" oninput="alert('변경되었습니당')">
+
+     <!-- 마우스 이동 좌표 표시 -->
+      <p id="coor">마우스를 움직여보세여</p>
+      <script>
+        document.addEventListener("mousemove", function(event){
+          document.getElementById("coor").innerText
+                   = `X: ${event.clientX} , Y: ${event.clientY}`;
+        }); // function 이름 붙일 필요 x
+        
+      </script>
+
+      <!-- 리스트 항목 더블 클릭 시 삭제 -->
+      <ul>
+        <li ondblclick="removeItem(this)">홍합탕</li>
+        <li ondblclick="removeItem(this)">버터갈릭치킨</li>
+        <li ondblclick="removeItem(this)">오징어볶음</li>
+        <li ondblclick="removeItem(this)">흑미밥</li>
+      </ul>
+
+      <script>
+        function removeItem(element){
+          element.remove();
+        }
+      </script>
+      
+</body>
+</html>
