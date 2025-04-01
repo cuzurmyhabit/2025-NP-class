@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="wordAdd">
+    <button onclick="addWord()">추가</button>
+    <button onclick="shortestWord()">최단 단어</button>
+    <p id="shortResult"></p>
+
+    <script>
+        words = [];
+
+        function addWord(){
+            word = document.getElementById("wordAdd").value.trim();
+                words.push(word);
+                document.getElementById("wordAdd").value = "";
+                alert(`추가됨: ${word}`);
+        }
+
+        function shortestWord() {
+            let shortest = words.sort((a, b) => a.length - b.length)[0];
+            document.getElementById("shortResult").innerText = `가장 짧은 단어: ${shortest}`;
+        }
+
+    </script>
+</body>
+</html>
