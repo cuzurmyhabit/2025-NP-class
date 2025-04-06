@@ -9,6 +9,8 @@
             color: gray;
             text-decoration: line-through;
         }
+
+        /*  취소선 스타일 시트 */
     </style>
 </head>
 <body>
@@ -22,20 +24,54 @@
      </ul>
 
      <script>
+
+        //데이터 저장
+        //localStorage.setItem('username', '지수민');
+
+        //데이터 불러오기
+        const user = localStorage.getItem('username');
+        console.log(user); // 김윤지
+
+
+        let input = document.getElementById("userInput");
+        input.addEventListener("keydown", function (event){
+            console.log(event.key);
+            if(event.key === "Enter"){
+                addToList();
+            }
+        })
         function addToList(){
             let input = document.getElementById("userInput").value;
             alert("출력 : " + input);
             if(input.trim() !== ""){    //.trim 문자열 앞 뒤의 공백 제거
                 let li = document.createElement("li"); //<li></li>가 만들ㅇ어져서 잊력됨
-                li.innerText = input; //<li> input 값 </li>
+                let span = document.createElement("span");
+                span.innerText = input;
+                //li.innerText = input; //<li> input 값 </li>
 
                 //두 번 클릭 시 삭제
-                li.setAttribute("ondblclick", "removeItem(this)");
+                //li.setAttribute("ondblclick", "removeItem(this)");
 
                 //한 번 클릭 시 취소선
                 li.addEventListener("click",function(){
-                    li.classList.toggle("done");
-                })
+
+                    // li.classList.toggle("done")
+                    if(li.classList.contains("done")){
+                        li.classList.remove("done");
+                    } else{
+                        li.classList.add("done");
+                    }
+                });
+
+                //투두 수정하기
+                span.addEventListener("dblclick", function(){
+                    const input = prompt("수정 데이터를 입력하세요");
+                    if(input.trim() !== ""){
+                        span.innerText = input;
+                    }
+                });
+                
+                li.appendChild(span);
                 document.getElementById("itemList").appendChild(li) //자식 요소 추가
                 document.getElementById("userInput").value = "";
             }
