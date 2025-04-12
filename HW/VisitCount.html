@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>방문 횟수 카운터</title>
+</head>
+<body>
+  <h1>방문 횟수 카운터</h1>
+  <h2>방문 횟수</h2>
+  <p id="visitCount">로딩 중...</p>
+
+  <script>
+    // localStorage에서 방문 횟수 가져오기
+    let visitCount = localStorage.getItem('visitCount');
+
+    // 방문 횟수가 없다면 1로 시작
+    if (visitCount === null) {
+      visitCount = 1;
+    } else {
+      visitCount = parseInt(visitCount) + 1;
+    }
+
+    // localStorage에 저장
+    localStorage.setItem('visitCount', visitCount);
+
+    // 화면에 표시
+    document.getElementById('visitCount').textContent = `${visitCount}회 방문하셨습니다! 🎉`;
+  </script>
+</body>
+</html>

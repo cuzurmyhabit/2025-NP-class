@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>나의 북마크</title>
+</head>
+
+<body>
+    <h1>📌 나의 북마크</h1>
+
+    <form id="bookmarkForm">
+        <input type="text" id="siteName" placeholder="사이트 이름" required>
+        <input type="url" id="siteURL" placeholder="사이트 URL (https:// 포함)" required>
+        <button type="submit">추가하기</button>
+    </form>
+
+    <h2>북마크 목록</h2>
+    <ul id="bookmarkList"></ul>
+
+    <script>
+        // 북마크 배열 불러오기 (없으면 빈 배열)
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+
+        let form = document.getElementById('bookmarkForm');
+        let list = document.getElementById('bookmarkList');
+
+        // 북마크 목록을 화면에 출력
+        function renderBookmarks() {
+            list.innerHTML = '';
+            for (let i = 0; i < bookmarks.length; i++) {
+                let bookmark = bookmarks[i];
+                let li = document.createElement('li');
+                li.innerHTML = `<a href="${bookmark.url}" target="_blank">${bookmark.name}</a>`;
+                list.appendChild(li);
+            }
+
+        }
+
+        // 폼 제출 시 실행
+        form.addEventListener('submit', function (e) {
+
+            let name = document.getElementById('siteName').value.trim();
+            let url = document.getElementById('siteURL').value.trim();
+
+            // 북마크 객체 만들고 배열에 추가
+            bookmarks.push({ name, url });
+
+            // localStorage에 저장
+            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+
+            // 목록 다시 렌더링
+            renderBookmarks();
+        });
+
+        // 페이지 로딩 시 초기 렌더링
+        renderBookmarks();
+    </script>
+</body>
+
+</html>

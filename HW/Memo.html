@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>메모장</title>
+</head>
+<body>
+    <h2>메모장</h2>
+    <textarea id="note" rows="5" cols="50"></textarea>
+
+    <script>
+        const note = document.getElementById('note');
+
+        // 저장된 메모 불러오기
+        const savedNote = localStorage.getItem('savedNote'); // ✅ 여기에 꼭 있어야 함!
+        if (savedNote) {
+            note.value = savedNote;
+        }
+
+        // 입력 시 저장
+        note.addEventListener('input', () => {
+            localStorage.setItem('savedNote', note.value);
+        });
+    </script>
+</body>
+</html>
