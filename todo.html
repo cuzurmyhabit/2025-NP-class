@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>투두 리스트 예제</title>
-    <style>
-           body {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f6f8;
       margin: 0;
@@ -113,112 +114,111 @@
   </style>
 
 
-    </style>
 </head>
+
 <body>
-
-    <script>
-        function removeItem(element) {
-            element.remove();
-        }
-    </script>
-
-    <div class = "container">
+  <!-- 사용자 입력값을 리스트에 추가 -->
+  <div class="container">
     <input type="text" id="userInput">
     <button onclick="addToList()">추가</button>
     <ul id="itemList"></ul>
-</div>  
-    <script>
+  </div>
+  <script>
+    //let todoArray = [];
 
-        let todoArray = [];
+    let todoArrayObj = JSON.parse(localStorage.getItem("todoArray"));
+    let todoArray = todoArrayObj ? todoArrayObj : [];
 
-        let todoArrayStr = localStorage.getItem("todoArray");
-        let todoArrayObj = JSON.parse(todoArrayStr);
+    //불러온 값을 li로 다시 탄생시키세요.
+    // todoArrayObj[0].text
+    // todoArrayObj[0].done 
+    // todoArrayObj[1].text
+    // todoArrayObj[1].done
+    // for( let i = 0; i < todoArrayObj.length ; i++ ){
+    //     console.log("1",todoArrayObj[i].text);
+    // }
 
-        todoArrayObj[0].text
-        todoArrayObj[0].done
-        todoArrayObj[1].text
-        todoArrayObj[1].done
+    loadAll();
+    function loadAll() {
+      document.getElementById("itemList").innerHTML = ""; //리스트 초기화
 
-        // 로컬스토리지에 저장된 투두 화면에 표시
-        if(todoArrayObj){
-            todoArray = todoArrayObj;
-            for(let i = 0; i < todoArray.length; i++){
-                let li = document.createElement("li");
-                let span = document.createElement("span");
-                span.innerText = todoArray[i].text;
+      todoArray.forEach((element, idx) => {
+        let input = element.text;
+        if (!validInput(input)) { return; }
 
-                // 클릭 시 취소선 토글
-                li.addEventListener("click", function(){
-                    li.classList.toggle("done");
-                });
+        let li = document.createElement("li"); //<li></li>
+        let span = document.createElement("span");
+        span.innerText = input; //<li>인풋값</li>
+        li.dataset.index = idx; //li에 인덱스값 저장
 
-                // 더블클릭 시 텍스트 수정
-                span.addEventListener("dblclick", function() {
-                    const newInput = prompt("수정 데이터를 입력하세요.");
-                    if (newInput && newInput.trim() !== "") {
-                        span.innerText = newInput;
-                    }
-                });
-
-                // 삭제 버튼 추가 및 기능 설정
-                let deleteBtn = document.createElement("button");
-                deleteBtn.innerText = '삭제';
-                
-                deleteBtn.addEventListener("click", function() {
-                    li.remove();
-                });
-
-                li.appendChild(span);
-                li.appendChild(deleteBtn);
-                document.getElementById("itemList").appendChild(li);
-            }
-        }
-
-        function addToList(){
-        let input = document.getElementById("userInput").value;
-        if(input.trim() !== ""){
-            let li = document.createElement("li");
-            let span = document.createElement("span");
-            span.innerText = input;
-
-
-        // 클릭 시 취소선 토글
-        li.addEventListener("click", function(){
-            li.classList.toggle("done");
+        //한번클릭시 취소선만들기
+        li.addEventListener("click", function () {
+          //li.classList.toggle("done");
+          if (li.classList.contains("done")) {
+            li.classList.remove("done");
+          } else {
+            li.classList.add("done");
+          }
         });
 
-        // 더블클릭 시 텍스트 수정
-        span.addEventListener("dblclick", function() {
-            const newInput = prompt("수정 데이터를 입력하세요.");
-            if (newInput && newInput.trim() !== "") {
-                span.innerText = newInput;
-            }
+        // 투두 수정하기
+        span.addEventListener("dblclick", function () {
+          const input = prompt("수정할 내용을 입력하세요.");
+          if (!validInput(input)) return;
+
+          todoArray[index] = input; // 배열 값 수정
+          localStorage.setItem("todoArray", JSON.stringify(todoArray)); // 로컬스토리지 저장
+          loadAll(); // 화면 다시 로드
         });
 
-        // 삭제 버튼 추가 및 기능 설정
+        //삭제버튼 만들기
         let deleteBtn = document.createElement("button");
         deleteBtn.innerText = '삭제';
-        
-        deleteBtn.addEventListener("click", function() {
-            li.remove();
+        deleteBtn.addEventListener("click", function () {
+          todoArray.splice(li.dataset.index, 1);
+          localStorage.setItem("todoArray", JSON.stringify(todoArray));  //로컬스토리지 저장
+          loadAll();
+          //li.remove();
         });
 
         li.appendChild(span);
         li.appendChild(deleteBtn);
         document.getElementById("itemList").appendChild(li);
 
-        let todoObj = {text:input, done:false}
-        todoArray.push(todoObj);
 
-        //로컬스토리지 저장
-        localStorage.setItem("todoArray", JSON.stringify(todoArray))
-
-        document.getElementById("userInput").value = "";
+      });
     }
-}
 
-    </script>
+    function validInput(data) {
+      if (data.trim() == "") {
+        alert("값을 입력하세요.");
+        return false;
+      }
+      return true;
+    }
+
+    let input = document.getElementById("userInput");
+    input.addEventListener("keydown", function (event) {
+      //console.log(event.key);
+      if (event.key == "Enter") {
+        addToList();
+      }
+    });
+
+    function addToList() {
+      let input = document.getElementById("userInput").value;
+      if (!validInput(input)) { return; }
+
+      //input값 초기화
+      document.getElementById("userInput").value = "";
+      let todoObj = { text: input, done: false };
+      todoArray.push(todoObj);
+
+      localStorage.setItem("todoArray", JSON.stringify(todoArray));  //로컬스토리지 저장
+      loadAll();
+    }
+  </script>
 
 </body>
+
 </html>
