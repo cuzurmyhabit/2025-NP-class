@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중간고사 시험 범위 정리</title>
+</head>
+
+<body>
+    <h2>1. 콘솔 출력 및 테이블</h2>
+    <script>
+        alert("Hello, World!"); //알림창 띄우기.
+        let a = confirm("확인과 취소") // 확인창 (T || F)
+        alert(a); // 확인창 값 반환
+
+        let b = prompt("이름을 입력하세요") // 입력창
+        document.write(b + " 님 안녕하세요"); // 입력값 출력
+
+        console.log("콘솔입니다" + b);      //콘솔입니다지수민
+        console.log("콘솔입니다", b);       //콘솔입니다 지수민
+
+    </script>
+
+    <h2>클릭 및 마우스 관련 이벤트</h2>
+    <button onclick="alert('버튼이 클릭되엇습니다')">클릭하세요</button> //버튼 누르면 알림창
+
+    <!-- 리스트 클릭 시 메시지 출력 -->
+    <ul>
+        <li onclick="showAlert('안녕하세요')">안녕하세요</li> //onclick -> 클릭 시 이벤트
+        <li onclick="showAlert('반갑습니다')">반갑습니다</li>
+        <li onclick="showAlert('다시만나요')">다시만나요</li>
+    </ul>
+
+    <!-- 더블 클릭 시 메시지 출력 -->
+    <ul>
+        <li ondblclick="showAlert2(this)">오리</li> //ondblclick -> 더블 클릭 시 이벤트
+        <li ondblclick="showAlert2(this)">너구리</li>
+        <li ondblclick="showAlert2(this)">오리너구리</li>
+    </ul>
+
+    <script>
+        function showAlert(message) {
+            alert(message);
+        }
+        // 요소의 텍스트를 추출하여 알림 표시
+        function showAlert2(element) {
+            alert(`${element.textContent}를 클릭했습니다!`);
+        }
+    </script>
+
+    <!-- 배경색 변경 -->
+    <ul id="result">
+        <li onclick="changeBg('green')">Green</li>
+        <li onclick="changeBg('orange')">Orange</li>
+        <li onclick="changeBg('purple')">Purple</li>
+    </ul>
+
+    <script>
+        function changeBg(color) {
+            document.querySelector("#result").style.backgroundColor = color;
+        }
+    </script>
+
+    <!-- 텍스트 기반 배경색 변경 -->
+    <ul id="result2" class="rClass">
+        <li onclick="changeBg2(this)">Green</li>
+        <li onclick="changeBg2(this)">Orange</li>
+        <li onclick="changeBg2(this)">Purple</li>
+    </ul>
+    <script>
+        // 클릭한 li의 텍스트를 이용해 배경색을 설정
+        function changeBg2(element) {
+            document.querySelector("#result2").style.backgroundColor = element.textContent;
+        }
+    </script>
+
+    <!-- 숫자 증가, 감소, 초기화 -->
+    <p id="counter"> 0 </p>
+
+    <button onclick="plus()"> + </button>
+    <button onclick="minus()"> - </button>
+    <button onclick="reset()"> reset </button>
+
+    <script>
+        let count = 0;
+
+        function plus() {
+            count++;
+            document.getElementById("counter").innerText = count;
+        }
+
+        function minus() {
+            count--;
+            document.getElementById("counter").innerText = count;
+        }
+
+        function reset() {
+            count = 0;
+            document.getElementById("counter").innerText = count;
+        }
+    </script>
+
+    <!-- 요소 숨기기/보이기 -->
+    <button onclick="hideElement()">숨기기</button>
+    <button onclick="showElement()">나타내기</button>
+    <div id="box"></div>
+    <script>
+        // 요소 숨기기/보이기 기능
+        function hideElement() {
+            document.getElementById("box").style.display = "none";
+        }
+        function showElement() {
+            document.getElementById("box").style.display = "";
+        }
+    </script>
+
+
+    <!-- 마우스 올리면 텍스트 변경 -->
+    <p id="hoverText" onmouseover="changeText(true)" onmouseout="changeText(false)">
+        여기에 마우스를 올려보세요
+    </p>
+    <script>
+        // 마우스 올릴 때와 내릴 때 텍스트 변경
+        function changeText(flag) {
+            document.getElementById("hoverText").innerText = flag
+                ? "마우스를 올렸어요!"
+                : "마우스를 내렸어요!";
+        }
+    </script>
+
+    <!-- 랜덤 배경색 변경 -->
+    <button onclick="changeRandomColor()">배경색 변경</button>
+    <script>
+        // 랜덤한 색상 중 하나를 선택하여 배경색 변경
+        function changeRandomColor() {
+            const colors = ["red", "blue", "green", "yellow", "purple", "pink"];
+            const randomcolor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.backgroundColor = randomcolor;
+        }
+    </script>
+
+    <!-- 3. 입력값 변경 및 마우스 좌표 표시 -->
+    <h2>3. 입력 및 마우스 좌표 예제</h2>
+    <input type="text" oninput="alert('변경되었습니다.')">
+    <p id="coor">마우스를 움직여보세요.</p>
+
+    <script>
+        documet.addEventListener("mousemove", function (event) {
+            document.getElementById("coor").innerText = "X: " + event.clientX + ", Y: " + event.clientY;
+        });
+    </script>
+
+    <!-- 리스트 항목 더블 클릭 시 삭제 -->
+    <ul>
+        <li ondblclick="removeItem(this)">홍합탕</li>
+        <li ondblclick="removeItem(this)">버터갈릭치킨</li>
+        <li ondblclick="removeItem(this)">오징어볶음</li>
+        <li ondblclick="removeItem(this)">흑미밥</li>
+    </ul>
+    
+    <script>
+        // 리스트 항목 삭제
+        function removeItem(element) {
+            element.remove();
+        }
+    </script>
+</body>
+
+</html>
